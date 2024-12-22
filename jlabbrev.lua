@@ -2550,14 +2550,14 @@ function preAutocomplete(bp)
 	local substitution = ABBREVS[abbrev]
 	if substitution then
 		buf:Replace(match[1], match[2], substitution)
-		return false
+		completions, suggestions = {""}, {""}
 	else
 		completions, suggestions = abbrevCompleter(buf)
-		if #suggestions > 0 then
-			buf.Completions, buf.Suggestions = completions, suggestions
-			buf.HasSuggestions = true
-			buf.CurSuggestion = -1
-		end
-		return true
 	end
+	if #suggestions > 0 then
+		buf.Completions, buf.Suggestions = completions, suggestions
+		buf.HasSuggestions = true
+		buf.CurSuggestion = -1
+	end
+	return true
 end
